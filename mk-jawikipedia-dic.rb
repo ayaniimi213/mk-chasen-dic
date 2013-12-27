@@ -23,6 +23,13 @@ open(filename){|file|
     title.gsub!(/ /, "　")
     title.gsub!(/&amp;/, "＆")
     title.gsub!(/;/, "；")
+    title.gsub!(/^"$/, "")
+    title.gsub!(/^'$/, "")
+    title.gsub!(/^\\$/, "")
+    title.gsub!(/"/, "”")
+    title.gsub!(/'/, "’")
+    title.gsub!(/\\/, "￥")
+    next if title.empty?
     kana = NKF.nkf('-w --katakana', title)
     
     puts "(品詞 (名詞 固有名詞 一般)) ((見出し語 (" + title.to_s + " " + cost.to_s + ")) (読み " + kana.to_s + ") )"
