@@ -9,8 +9,10 @@ mk-chasen-dic
 ---
 - Ruby
 - nkf
+- split
 
 * 手順
+---
 ** はてなキーワード
 
 ````bash
@@ -25,8 +27,10 @@ chasenの文法定義ファイルを用意する。
 - connect.cha - 連接表定義ファイル
 
 makedaコマンドを使い辞書をコンパイルする。makedaコマンドは文法定義ファイルのあるディレクトリで行うこと。
+ファイルが大きいとmkchadicが落ちることがあるので、適当に分割して読み込ませる。
 ````bash
-$ makeda -i w hatena hatena.dic
+$ split -l 10000 hatena.dic
+$ `chasen-config --mkchadic`/makeda -i w hatena x*
 ````
 
 
@@ -45,15 +49,22 @@ chasenの文法定義ファイルを用意する。
 - connect.cha - 連接表定義ファイル
 
 makedaコマンドを使い辞書をコンパイルする。makedaコマンドは文法定義ファイルのあるディレクトリで行うこと。
+ファイルが大きいとmkchadicが落ちることがあるので、適当に分割して読み込ませる。
 ````bash
-$ makeda -i w jawikipedia jawikipedia.dic
+$ split -l 10000 hatena.dic
+$ `chasen-config --mkchadic`/makeda -i w jawikipedia jawikipedia.dic
 ````
 
+wikipediaのタイトルが長い場合、"is too long"と怒られることがある。
+
 * 実装
+---
 形態素生起コストとは適当に5000, 読みはひらがなをカタカナに直しただけです。
 コストは再考の余地ありですが、読みはどうせ使わないでしょうから適当に実装しました。
 
 
-
 * 参考
-ChaSen's Wiki - 辞書の作り方 http://chasen.naist.jp/hiki/ChaSen/?%BC%AD%BD%F1%A4%CE%BA%EE%A4%EA%CA%FD
+--
+- ChaSen's Wiki - 辞書の作り方 http://chasen.naist.jp/hiki/ChaSen/?%BC%AD%BD%F1%A4%CE%BA%EE%A4%EA%CA%FD
+- mecabにwikipediaのタイトルリストを追加する | ミラボ http://log.miraoto.com/2012/11/703/
+- mecabにはてなキーワードのタイトルリストを追加する | ミラボ http://log.miraoto.com/2012/11/705/
